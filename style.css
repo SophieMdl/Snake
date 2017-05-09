@@ -6,15 +6,20 @@ body {
     background: #000;
     overflow: hidden;
     height: 100%;
+    color: #fff;
+    font-family: Courier, monospace;
+    width: 100%;
+    position: absolute;
 }
 
 #game {
     display: block;
-    margin: 50px auto;
+    margin: 0 auto;
     width: 90%;
-    height: 90%;
+    height: 80%;
     box-shadow: 0 0 0 8px #666;
     position: relative;
+    text-align: center
 }
 
 .apple {
@@ -23,6 +28,7 @@ body {
     background: #fff;
     position: absolute;
     border-radius: 50px;
+    left: -150px;
 }
 
 .snake {
@@ -33,31 +39,34 @@ body {
 }
 
 .score {
-    font: bold 6em/1 "Roboto Mono", monospace;
+    font-family: Courier, monospace;
     top: 80px;
+    text-align: right;
+    margin-right: 5%;
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 18px;
 }
 
-
-/*@media (max-width: 767px) {
-    #game {
-        width: 400px;
-        margin: 40px auto;
-        height: 400px;
-    }
+h1 {
+    color: #fff;
+    font-family: Courier, monospace;
+    font-size: 80px;
+    padding-top: 12%
 }
 
-@media (min-width: 768px) and (max-width: 1200px) {
-    #game {
-        width: 750px;
-        margin: 30px auto;
-        height: 400px;
-    }
+button.play {
+    background: 3px solid #fff;
+    padding: 15px 40px;
+    color: #fff;
+    font-family: Courier, monospace;
+    background: #000;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
 }
 
-@media (min-width: 1200px) {
-    #game {
-        width: 1200px;
-        margin: 50px auto;
-        height: 600px;
-    }
-}*/
+button.play:hover {
+    background: #fff;
+    color: #000;
+}

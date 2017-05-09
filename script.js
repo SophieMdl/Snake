@@ -9,6 +9,12 @@ var appleSize = snakeSize = 15;
 
 var userSpeed;
 
+var score = document.querySelector('.score span');
+
+scoreValue = 0;
+
+var playBtn = document.querySelector('.play');
+var title = document.querySelector("h1");
 var gameArea = document.querySelector('#game');
 
 var game = {
@@ -36,10 +42,7 @@ var apple = {
     size: appleSize
 };
 
-var score = {
-    elem: document.querySelector('.score'),
-    value: 0
-};
+
 
 function snakeBody() {
     for (var i = 0; i < snake.length; i++) {
@@ -103,6 +106,7 @@ function checkCollisions() {
         ((snake.y + snake.size) >= apple.y) && //Haut
         (snake.y <= (apple.y + apple.size))) { //bas
         resetApple();
+        ++scoreValue;
         collisionApple = true;
     } else if (snake.x <= 8 ||
         (snake.x + snake.size) >= game.width ||
@@ -111,15 +115,26 @@ function checkCollisions() {
         //Si la tête du serpent sort du terrain
         pause = true;
     }
-
+    //Si la tête du serpent touche une partie de son corps
+    for (var i = 0; i < snake.length - 2; i++) {
+        if ((snake.x == snake.body[i].x) && (snake.y == snake.body[i].y)) {
+            pause = true;
+        }
+    }
 }
 
 function resetApple() {
     //Position aléatoire de la pomme dans le terrain
-    apple.x = Math.floor(Math.random() * game.width);
-    apple.y = Math.floor(Math.random() * game.height);
+    apple.x = Math.floor(Math.random() * game.width - apple.size);
+    apple.y = Math.floor(Math.random() * game.height - apple.size);
     apple.elem.style.top = apple.y + 'px';
     apple.elem.style.left = apple.x + 'px';
+}
+
+function menuDisappear() {
+    playBtn.style.opacity = 0;
+    playBtn.setAttribute('disabled', true);
+    title.innerHTML = "";
 }
 
 function init() {
@@ -127,6 +142,7 @@ function init() {
     //Placement de la pomme et création du serpent
     //Mise en place d'une boucle toutes les 50 ms (dépendra de la vitesse de départ)
     //Mise en place d'un écouteur de clavier
+    menuDisappear();
     resetApple();
     snakeBody();
     setInterval(loop, 50);
@@ -141,6 +157,7 @@ function render() {
         snake.body[i].snakeSlice.style.top = snake.body[i].y + 'px';
         snake.body[i].snakeSlice.style.left = snake.body[i].x + 'px';
     }
+    score.innerHTML = scoreValue;
 }
 
 function loop() {
@@ -152,4 +169,4 @@ function loop() {
     }
 }
 
-init();
+playBtn.addEventListener('click', init);
