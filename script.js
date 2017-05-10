@@ -10,6 +10,8 @@ var appleSize = snakeSize = 15;
 var userSpeed;
 
 var score = document.querySelector('.score span');
+var score2 = document.querySelector(".score2");
+
 
 scoreValue = 0;
 
@@ -111,15 +113,15 @@ function checkCollisions() {
         collisionApple = true;
     } else if (snake.x <= 8 ||
         (snake.x + snake.size) >= game.width ||
-        snake.y <= 8 ||
-        (snake.y + snake.size) >= game.height) {
+        snake.y <= 0 ||
+        (snake.y + snake.size) > game.height) {
         //Si la tête du serpent sort du terrain
-        pause = true;
+        gameOver();
     }
     //Si la tête du serpent touche une partie de son corps
     for (var i = 0; i < snake.length - 2; i++) {
         if ((snake.x == snake.body[i].x) && (snake.y == snake.body[i].y)) {
-            pause = true;
+            gameOver();
         }
     }
 }
@@ -133,10 +135,22 @@ function resetApple() {
 }
 
 function menuDisappear() {
-    playBtn.style.opacity = 0;
+    playBtn.style.visibility = "hidden";
     infos.style.opacity = 0;
-    playBtn.setAttribute('disabled', true);
     title.innerHTML = "";
+}
+
+function gameOver() {
+    pause = true;
+    title.innerHTML = "GAME OVER";
+    playBtn.style.visibility = "visible";
+    playBtn.innerHTML = "Play again !";
+    playBtn.style.opacity = 1;
+    score2.innerHTML = "Score : " + scoreValue;
+    /*    playBtn.setAttribute('disabled', false);*/
+    playBtn.addEventListener('click', function() {
+        window.location.reload()
+    });
 }
 
 function init() {
@@ -144,10 +158,12 @@ function init() {
     //Placement de la pomme et création du serpent
     //Mise en place d'une boucle toutes les 50 ms (dépendra de la vitesse de départ)
     //Mise en place d'un écouteur de clavier
+
     menuDisappear();
     resetApple();
     snakeBody();
     setInterval(loop, 50);
+    window.removeEventListener('keydown', init);
     window.addEventListener('keydown', function(e) {
         snakeDirection(e);
     });
@@ -171,4 +187,8 @@ function loop() {
     }
 }
 
-playBtn.addEventListener('click', init);
+function addEventListeners() {
+    playBtn.addEventListener('click', init);
+    window.addEventListener('keydown', init);
+}
+addEventListeners();
