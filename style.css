@@ -12,6 +12,17 @@ body {
     position: absolute;
 }
 
+.flex {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.clear {
+    clear: both;
+}
+
 #game {
     display: block;
     margin: 0 auto;
@@ -20,6 +31,14 @@ body {
     box-shadow: 0 0 0 8px #666;
     position: relative;
     text-align: center
+}
+
+img.arrow-keys {
+    max-width: 130px
+}
+
+img.space-key {
+    max-width: 260px
 }
 
 .apple {
@@ -52,7 +71,7 @@ h1 {
     color: #fff;
     font-family: Courier, monospace;
     font-size: 80px;
-    padding-top: 12%
+    padding-top: 7%;
 }
 
 button.play {
@@ -64,6 +83,7 @@ button.play {
     font-weight: bold;
     font-size: 16px;
     cursor: pointer;
+    margin-bottom: 70px
 }
 
 button.play:hover {

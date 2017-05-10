@@ -15,6 +15,7 @@ scoreValue = 0;
 
 var playBtn = document.querySelector('.play');
 var title = document.querySelector("h1");
+var infos = document.querySelector(".flex");
 var gameArea = document.querySelector('#game');
 
 var game = {
@@ -125,14 +126,15 @@ function checkCollisions() {
 
 function resetApple() {
     //Position aléatoire de la pomme dans le terrain
-    apple.x = Math.floor(Math.random() * game.width - apple.size);
-    apple.y = Math.floor(Math.random() * game.height - apple.size);
+    apple.x = Math.floor(Math.random() * game.width - apple.size) + apple.size;
+    apple.y = Math.floor(Math.random() * game.height - apple.size) + apple.size;
     apple.elem.style.top = apple.y + 'px';
     apple.elem.style.left = apple.x + 'px';
 }
 
 function menuDisappear() {
     playBtn.style.opacity = 0;
+    infos.style.opacity = 0;
     playBtn.setAttribute('disabled', true);
     title.innerHTML = "";
 }
