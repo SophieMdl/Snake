@@ -81,8 +81,30 @@ h1 {
     color: #fff;
     font-family: Courier, monospace;
     font-size: 6rem;
-    padding-top: 7%;
+    padding-top: 5%;
     margin-top: 0px;
+}
+
+select,
+button {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.custom-select {
+    background: url('img/arrow2.svg') no-repeat right transparent;
+    color: #fff;
+    font-family: Courier;
+    padding: 5px;
+    width: 50px;
+    box-shadow: none;
+    background-position-x: 85%;
+    background-size: 10px
+}
+
+.custom-select option {
+    background-color: #000
 }
 
 button.play {
@@ -94,6 +116,7 @@ button.play {
     font-weight: bold;
     font-size: 1.6rem;
     cursor: pointer;
+    margin: 20px;
 }
 
 button.play:hover {

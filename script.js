@@ -12,8 +12,9 @@ var userSpeed;
 var score = document.querySelector('.score span');
 var score2 = document.querySelector(".score2");
 
+var select = document.querySelector('.custom-select');
 
-scoreValue = 0;
+var scoreValue = 0;
 
 var playBtn = document.querySelector('.play');
 var title = document.querySelector("h1");
@@ -44,8 +45,6 @@ var apple = {
     y: 0,
     size: appleSize
 };
-
-
 
 function snakeBody() {
     for (var i = 0; i < snake.length; i++) {
@@ -128,8 +127,8 @@ function checkCollisions() {
 
 function resetApple() {
     //Position aléatoire de la pomme dans le terrain
-    apple.x = Math.floor(Math.random() * game.width - apple.size) + apple.size;
-    apple.y = Math.floor(Math.random() * game.height - apple.size) + apple.size;
+    apple.x = Math.floor(Math.random() * game.width - apple.size - 8) + apple.size;
+    apple.y = Math.floor(Math.random() * game.height - apple.size - 8) + apple.size;
     apple.elem.style.top = apple.y + 'px';
     apple.elem.style.left = apple.x + 'px';
 }
@@ -137,6 +136,7 @@ function resetApple() {
 function menuDisappear() {
     playBtn.style.visibility = "hidden";
     infos.style.opacity = 0;
+    document.querySelector('h3').style.visibility = "hidden";
     title.innerHTML = "";
 }
 
@@ -155,14 +155,18 @@ function gameOver() {
 
 function init() {
     //Initialisation du jeu :
-    //Placement de la pomme et création du serpent
-    //Mise en place d'une boucle toutes les 50 ms (dépendra de la vitesse de départ)
-    //Mise en place d'un écouteur de clavier
-
+    //Disparition du menu, placement de la pomme et création du serpent 
+    //Bouce qui dépend de la vitesse définie :
+    //1 : 100ms
+    //2 : 80ms
+    //3 : 60ms
+    //4 : 40ms
+    //5 : 20ms
     menuDisappear();
     resetApple();
     snakeBody();
-    setInterval(loop, 50);
+    userSpeed = 100 - 20 * (select.value - 1);
+    setInterval(loop, userSpeed);
     window.removeEventListener('keydown', init);
     window.addEventListener('keydown', function(e) {
         snakeDirection(e);
