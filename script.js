@@ -1,12 +1,12 @@
 var pause = false;
-var collisionApple = false;
 
 var snakeSlice;
 var tail;
 var head;
-
-var audioApple = new Audio('sounds/eat.wav');
-var audioHurt = new Audio('sounds/hit.wav');
+var audio = {
+    eat: new Audio('sounds/eat.wav'),
+    hurt: new Audio('sounds/hit.wav')
+}
 
 var appleSize = snakeSize = 15;
 
@@ -46,7 +46,8 @@ var apple = {
     elem: document.querySelector('.apple'),
     x: 0,
     y: 0,
-    size: appleSize
+    size: appleSize,
+    collision: false
 };
 
 function snakeBody() {
@@ -64,10 +65,10 @@ function snakeBody() {
 
 function snakeDirection(e) {
     //La direction change en fonction de la touche appuyée. Et espace = pause
-    if (e.which === 38) { snake.direction = 'top'; }
-    if (e.which === 40) { snake.direction = 'down'; }
-    if (e.which === 39) { snake.direction = 'right'; }
-    if (e.which === 37) { snake.direction = 'left'; }
+    if (e.which === 38 && snake.direction != 'down') { snake.direction = 'top'; }
+    if (e.which === 40 && snake.direction != 'top') { snake.direction = 'down'; }
+    if (e.which === 39 && snake.direction != 'left') { snake.direction = 'right'; }
+    if (e.which === 37 && snake.direction != 'right') { snake.direction = 'left'; }
     if (e.which === 32) {
         if (!pause) pause = true;
         else pause = false;
@@ -86,7 +87,7 @@ function moveSnake() {
     if (snake.direction == 'left') { snake.x -= snake.size; }
     if (snake.direction == 'right') { snake.x += snake.size; }
     //S'il ne rencontre pas de pomme
-    if (!collisionApple) {
+    if (!apple.collision) {
         //on retire la queue du seprent du tableau et on lui donne les coordonnées de la tête
         tail = snake.body.shift();
         tail.x = snake.x;
@@ -98,7 +99,7 @@ function moveSnake() {
         tail.snakeSlice.setAttribute('class', 'snake');
         gameArea.appendChild(tail.snakeSlice);
         snake.length += 1;
-        collisionApple = false;
+        apple.collision = false;
     }
     //On ajoute la queue avec ses nouvelles coordonnées à la fin du tableau
     snake.body.push(tail);
@@ -110,10 +111,10 @@ function checkCollisions() {
         (snake.x <= (apple.x + apple.size)) && //Gauche
         ((snake.y + snake.size) >= apple.y) && //Haut
         (snake.y <= (apple.y + apple.size))) { //bas
-        audioApple.play();
+        audio.eat.play();
         resetApple();
         ++scoreValue;
-        collisionApple = true;
+        apple.collision = true;
     } else if (snake.x <= 0 ||
         (snake.x + snake.size) >= game.width ||
         snake.y <= 0 ||
@@ -128,6 +129,7 @@ function checkCollisions() {
         }
     }
 }
+console.log(apple.collision);
 
 function resetApple() {
     //Position aléatoire de la pomme dans le terrain
@@ -145,7 +147,7 @@ function menuDisappear() {
 }
 
 function gameOver() {
-    audioHurt.play();
+    audio.hurt.play();
     pause = true;
     title.innerHTML = "GAME OVER";
     playBtn.style.visibility = "visible";

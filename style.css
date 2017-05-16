@@ -74,7 +74,7 @@ img.space-key {
     margin-right: 5%;
     margin-top: 20px;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 1.8rem;
 }
 
 h1 {
@@ -122,4 +122,10 @@ button.play {
 button.play:hover {
     background: #fff;
     color: #000;
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 80%
+    }
 }
