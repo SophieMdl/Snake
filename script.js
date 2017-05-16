@@ -5,6 +5,9 @@ var snakeSlice;
 var tail;
 var head;
 
+var audioApple = new Audio('sounds/eat.wav');
+var audioHurt = new Audio('sounds/hit.wav');
+
 var appleSize = snakeSize = 15;
 
 var userSpeed;
@@ -107,10 +110,11 @@ function checkCollisions() {
         (snake.x <= (apple.x + apple.size)) && //Gauche
         ((snake.y + snake.size) >= apple.y) && //Haut
         (snake.y <= (apple.y + apple.size))) { //bas
+        audioApple.play();
         resetApple();
         ++scoreValue;
         collisionApple = true;
-    } else if (snake.x <= 8 ||
+    } else if (snake.x <= 0 ||
         (snake.x + snake.size) >= game.width ||
         snake.y <= 0 ||
         (snake.y + snake.size) > game.height) {
@@ -141,6 +145,7 @@ function menuDisappear() {
 }
 
 function gameOver() {
+    audioHurt.play();
     pause = true;
     title.innerHTML = "GAME OVER";
     playBtn.style.visibility = "visible";
