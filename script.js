@@ -19,8 +19,8 @@ var select = document.querySelector('.custom-select');
 
 var scoreValue = 0;
 
-var playBtn = document.querySelector('.play');
 var title = document.querySelector("h1");
+var title2 = document.querySelector(".title2");
 var infos = document.querySelector(".flex");
 var gameArea = document.querySelector('#game');
 
@@ -140,22 +140,20 @@ function resetApple() {
 }
 
 function menuDisappear() {
-    playBtn.style.visibility = "hidden";
     infos.style.opacity = 0;
+    title2.innerHTML = "";
     document.querySelector('h3').style.visibility = "hidden";
     title.innerHTML = "";
+    score2.innerHTML = "";
 }
 
 function gameOver() {
     audio.hurt.play();
     pause = true;
     title.innerHTML = "GAME OVER";
-    playBtn.style.visibility = "visible";
-    playBtn.innerHTML = "Play again !";
-    playBtn.style.opacity = 1;
     score2.innerHTML = "Score : " + scoreValue;
-    /*    playBtn.setAttribute('disabled', false);*/
-    playBtn.addEventListener('click', function() {
+    title2.innerHTML = "Appuyez sur n'importe quelle touche pour recommencer";
+    window.addEventListener('keydown', function() {
         window.location.reload()
     });
 }
@@ -199,7 +197,6 @@ function loop() {
 }
 
 function addEventListeners() {
-    playBtn.addEventListener('click', init);
     window.addEventListener('keydown', init);
 }
 addEventListeners();

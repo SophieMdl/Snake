@@ -85,8 +85,7 @@ h1 {
     margin-top: 0px;
 }
 
-select,
-button {
+select {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -107,7 +106,8 @@ button {
     background-color: #000
 }
 
-button.play {
+
+/*button.play {
     background: 3px solid #fff;
     padding: 15px 40px;
     color: #fff;
@@ -122,7 +122,7 @@ button.play {
 button.play:hover {
     background: #fff;
     color: #000;
-}
+}*/
 
 @media (max-width: 768px) {
     html {
