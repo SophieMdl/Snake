@@ -46,12 +46,12 @@ const apple = {
 };
 
 const snakeBody = () => {
-    for (let i = 0; i < snake.length; i++) { //A CHANGER en foreach / for of
+    for (let i = 0; i < snake.length; i++) {
         //création d'un tableau contenant toutes les parties du serpent, avec pour chaque partie sa position x y.
         console.log(snake.y)
         snake.body.push({ x: snakeSize * i, y: snake.y, snakeSlice });
     }
-    for (let u = 0; u < snake.length; u++) { //A CHANGER en foreach / for of
+    for (let u = 0; u < snake.length; u++) {
         //Pour chaque élément du tableau, une div de la classe snake est ajoutée à la page
         snake.body[u].snakeSlice = document.createElement("div");
         snake.body[u].snakeSlice.setAttribute('class', 'snake');

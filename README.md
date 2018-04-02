@@ -1,7 +1,7 @@
 # Snake
-Snake - Javacript
+Snake - Javacript ES6
 
-Création d'un jeu de snake en JS.
+Création personnelle d'un jeu de snake en JS.
 
 Touche directionnelles : haut, bas, gauche, droite
 
