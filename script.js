@@ -1,37 +1,34 @@
-var pause = false;
+let pause = false;
 
-var snakeSlice;
-var tail;
-var head;
-var audio = {
+let snakeSlice;
+let tail;
+let head;
+const audio = {
     eat: new Audio('sounds/eat.wav'),
     hurt: new Audio('sounds/hit.wav')
 }
 
-var appleSize = snakeSize = 15;
+const appleSize = snakeSize = 15;
 
-var userSpeed;
+let userSpeed;
+let scoreValue = 0;
 
-var score = document.querySelector('.score span');
-var score2 = document.querySelector(".score2");
+const score = document.querySelector('.score span');
+const score2 = document.querySelector(".score2");
+const select = document.querySelector('.custom-select');
+const title = document.querySelector("h1");
+const title2 = document.querySelector(".title2");
+const infos = document.querySelector(".flex");
+const gameArea = document.querySelector('#game');
 
-var select = document.querySelector('.custom-select');
-
-var scoreValue = 0;
-
-var title = document.querySelector("h1");
-var title2 = document.querySelector(".title2");
-var infos = document.querySelector(".flex");
-var gameArea = document.querySelector('#game');
-
-var game = {
+const game = {
     //La taille du terrain étant responsive, la taille est calculée dynamiquement à chaque lancement
     // 8 = prise en compte de la bordure
     width: gameArea.offsetWidth - 8,
     height: gameArea.offsetHeight,
 }
 
-var snake = {
+const snake = {
     elem: document.querySelector('.snake'),
     x: game.width / 2,
     y: game.height / 2,
@@ -42,7 +39,7 @@ var snake = {
     body: []
 };
 
-var apple = {
+const apple = {
     elem: document.querySelector('.apple'),
     x: 0,
     y: 0,
@@ -50,12 +47,12 @@ var apple = {
     collision: false
 };
 
-function snakeBody() {
-    for (var i = 0; i < snake.length; i++) {
+const snakeBody = () => {
+    for (let i = 0; i < snake.length; i++) { //A CHANGER en foreach / for of
         //création d'un tableau contenant toutes les parties du serpent, avec pour chaque partie sa position x y.
         snake.body.push({ x: snakeSize * i, y: snake.y, snakeSlice });
     }
-    for (var u = 0; u < snake.length; u++) {
+    for (let u = 0; u < snake.length; u++) { //A CHANGER en foreach / for of
         //Pour chaque élément du tableau, une div de la classe snake est ajoutée à la page
         snake.body[u].snakeSlice = document.createElement("div");
         snake.body[u].snakeSlice.setAttribute('class', 'snake');
@@ -63,7 +60,7 @@ function snakeBody() {
     }
 }
 
-function snakeDirection(e) {
+const snakeDirection = (e) => {
     //La direction change en fonction de la touche appuyée. Et espace = pause
     if (e.which === 38 && snake.direction != 'down') { snake.direction = 'top'; }
     if (e.which === 40 && snake.direction != 'top') { snake.direction = 'down'; }
@@ -75,17 +72,17 @@ function snakeDirection(e) {
     }
 }
 
-function moveSnake() {
+const moveSnake = () => {
     //head prend les valeurs de la dernière div placée sur le jeu
     head = snake.body[snake.length - 1];
     //Les coordonnées du serpent sont déterminées par la position de head
     snake.x = head.x;
     snake.y = head.y;
     //Le serpent avance d'une case (taille d'une 'tranche') en fonction de sa direction 
-    if (snake.direction == 'top') { snake.y -= snake.size; }
-    if (snake.direction == 'down') { snake.y += snake.size; }
-    if (snake.direction == 'left') { snake.x -= snake.size; }
-    if (snake.direction == 'right') { snake.x += snake.size; }
+    if (snake.direction === 'top') { snake.y -= snake.size; }
+    if (snake.direction === 'down') { snake.y += snake.size; }
+    if (snake.direction === 'left') { snake.x -= snake.size; }
+    if (snake.direction === 'right') { snake.x += snake.size; }
     //S'il ne rencontre pas de pomme
     if (!apple.collision) {
         //on retire la queue du seprent du tableau et on lui donne les coordonnées de la tête
@@ -105,7 +102,7 @@ function moveSnake() {
     snake.body.push(tail);
 }
 
-function checkCollisions() {
+const checkCollisions = () => {
     //Si la tête du serpent rencontre une pomme
     if (((snake.x + snake.size) > apple.x) && //Droit
         (snake.x <= (apple.x + apple.size)) && //Gauche
@@ -123,15 +120,14 @@ function checkCollisions() {
         gameOver();
     }
     //Si la tête du serpent touche une partie de son corps
-    for (var i = 0; i < snake.length - 2; i++) {
-        if ((snake.x == snake.body[i].x) && (snake.y == snake.body[i].y)) {
+    for (let i = 0; i < snake.length - 2; i++) {
+        if ((snake.x === snake.body[i].x) && (snake.y === snake.body[i].y)) {
             gameOver();
         }
     }
 }
-console.log(apple.collision);
 
-function resetApple() {
+const resetApple = () => {
     //Position aléatoire de la pomme dans le terrain
     apple.x = Math.floor(Math.random() * game.width - apple.size - 8) + apple.size;
     apple.y = Math.floor(Math.random() * game.height - apple.size - 8) + apple.size;
@@ -139,7 +135,7 @@ function resetApple() {
     apple.elem.style.left = apple.x + 'px';
 }
 
-function menuDisappear() {
+const menuDisappear = () => {
     infos.style.opacity = 0;
     title2.innerHTML = "";
     document.querySelector('h3').style.visibility = "hidden";
@@ -147,18 +143,18 @@ function menuDisappear() {
     score2.innerHTML = "";
 }
 
-function gameOver() {
+const gameOver = () => {
     audio.hurt.play();
     pause = true;
     title.innerHTML = "GAME OVER";
     score2.innerHTML = "Score : " + scoreValue;
     title2.innerHTML = "Appuyez sur n'importe quelle touche pour recommencer";
-    window.addEventListener('keydown', function() {
-        window.location.reload()
+    window.addEventListener('keydown', () => {
+        window.location.reload();
     });
 }
 
-function init() {
+const init = () => {
     //Initialisation du jeu :
     //Disparition du menu, placement de la pomme et création du serpent 
     //Bouce qui dépend de la vitesse définie :
@@ -178,16 +174,16 @@ function init() {
     });
 }
 
-function render() {
+const render = () => {
     //Changement de position de chaque élément du tableau serpent et calcul du score
-    for (var i = 0; i < snake.length; i++) {
+    for (let i = 0; i < snake.length; i++) {
         snake.body[i].snakeSlice.style.top = snake.body[i].y + 'px';
         snake.body[i].snakeSlice.style.left = snake.body[i].x + 'px';
     }
     score.innerHTML = scoreValue;
 }
 
-function loop() {
+const loop = () => {
     //Si le jeu n'est pas en pause, boucle qui fait bouger le serpent, vérifie les collisions et affiche le rendu à l'écran
     if (!pause) {
         moveSnake();
@@ -196,7 +192,7 @@ function loop() {
     }
 }
 
-function addEventListeners() {
+const addEventListeners = () => {
     window.addEventListener('keydown', init);
 }
 addEventListeners();
