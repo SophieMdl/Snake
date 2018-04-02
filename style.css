@@ -32,11 +32,12 @@ body {
 #game {
     display: block;
     margin: 20px auto;
-    width: 90%;
-    height: 80%;
+    width: 900px;
+    height: 600px;
     box-shadow: 0 0 0 8px #666;
     position: relative;
-    text-align: center
+    text-align: center;
+    overflow: hidden;
 }
 
 img.arrow-keys {
@@ -104,28 +105,4 @@ select {
 
 .custom-select option {
     background-color: #000
-}
-
-
-/*button.play {
-    background: 3px solid #fff;
-    padding: 15px 40px;
-    color: #fff;
-    font-family: Courier, monospace;
-    background: #000;
-    font-weight: bold;
-    font-size: 1.6rem;
-    cursor: pointer;
-    margin: 20px;
-}
-
-button.play:hover {
-    background: #fff;
-    color: #000;
-}*/
-
-@media (max-width: 768px) {
-    html {
-        font-size: 80%
-    }
 }

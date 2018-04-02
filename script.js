@@ -22,15 +22,13 @@ const infos = document.querySelector(".flex");
 const gameArea = document.querySelector('#game');
 
 const game = {
-    //La taille du terrain étant responsive, la taille est calculée dynamiquement à chaque lancement
-    // 8 = prise en compte de la bordure
-    width: gameArea.offsetWidth - 8,
-    height: gameArea.offsetHeight,
+    width: 900,
+    height: 600,
 }
 
 const snake = {
     elem: document.querySelector('.snake'),
-    x: game.width / 2,
+    x: 0,
     y: game.height / 2,
     speed: userSpeed,
     direction: 'right',
@@ -50,6 +48,7 @@ const apple = {
 const snakeBody = () => {
     for (let i = 0; i < snake.length; i++) { //A CHANGER en foreach / for of
         //création d'un tableau contenant toutes les parties du serpent, avec pour chaque partie sa position x y.
+        console.log(snake.y)
         snake.body.push({ x: snakeSize * i, y: snake.y, snakeSlice });
     }
     for (let u = 0; u < snake.length; u++) { //A CHANGER en foreach / for of
@@ -112,9 +111,9 @@ const checkCollisions = () => {
         resetApple();
         ++scoreValue;
         apple.collision = true;
-    } else if (snake.x <= 0 ||
-        (snake.x + snake.size) >= game.width ||
-        snake.y <= 0 ||
+    } else if (snake.x < 0 ||
+        (snake.x + snake.size) > game.width ||
+        snake.y < 0 ||
         (snake.y + snake.size) > game.height) {
         //Si la tête du serpent sort du terrain
         gameOver();
@@ -129,8 +128,9 @@ const checkCollisions = () => {
 
 const resetApple = () => {
     //Position aléatoire de la pomme dans le terrain
-    apple.x = Math.floor(Math.random() * game.width - apple.size - 8) + apple.size;
-    apple.y = Math.floor(Math.random() * game.height - apple.size - 8) + apple.size;
+    apple.x = Math.floor(Math.random() * (game.width - apple.size));
+    apple.y = Math.floor(Math.random() * (game.height - apple.size));
+    console.log(apple.size)
     apple.elem.style.top = apple.y + 'px';
     apple.elem.style.left = apple.x + 'px';
 }
@@ -169,14 +169,14 @@ const init = () => {
     userSpeed = 100 - 20 * (select.value - 1);
     setInterval(loop, userSpeed);
     window.removeEventListener('keydown', init);
-    window.addEventListener('keydown', function(e) {
+    window.addEventListener('keydown', (e) => {
         snakeDirection(e);
     });
 }
 
 const render = () => {
     //Changement de position de chaque élément du tableau serpent et calcul du score
-    for (let i = 0; i < snake.length; i++) {
+    for (let i = 0; i < snake.length; i++) { //changer en foreach
         snake.body[i].snakeSlice.style.top = snake.body[i].y + 'px';
         snake.body[i].snakeSlice.style.left = snake.body[i].x + 'px';
     }
@@ -195,4 +195,5 @@ const loop = () => {
 const addEventListeners = () => {
     window.addEventListener('keydown', init);
 }
+
 addEventListeners();
